@@ -124,12 +124,19 @@ export default function Window({
         onMinimize={() => onMinimize(win.id)}
         onMaximize={() => onMaximize(win.id)}
       />
-      <WindowNavBar icon={win.icon} title={win.title} />
-      <WindowToolbar />
+      {win.appId !== "resume" && (
+        <WindowNavBar icon={win.icon} title={win.title} />
+      )}
+      {win.appId !== "resume" && <WindowToolbar />}
 
       <div
-        className="flex-1 flex overflow-hidden"
-        style={{ background: "#1e1e1e" }}
+        className="flex-1 flex"
+        style={{
+          background: "#1e1e1e",
+          overflow: "hidden",
+          minWidth: 0,
+          minHeight: 0,
+        }}
       >
         {children}
       </div>

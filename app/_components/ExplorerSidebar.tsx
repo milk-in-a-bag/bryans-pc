@@ -8,6 +8,7 @@ import {
   DownloadIcon,
   DocumentsIcon,
   FolderIcon,
+  PdfIcon,
   ThisPCIcon,
   DriveIcon,
   NetworkIcon,
@@ -20,11 +21,11 @@ interface ExplorerSidebarProps {
 }
 
 const NAV_APPS: { id: AppId; label: string; color: string }[] = [
-  { id: "about", label: "About Me", color: "#60cdff" },
+  { id: "about", label: "About Me", color: "#e8a838" },
   { id: "projects", label: "Projects", color: "#e8a838" },
   { id: "blog", label: "Blog", color: "#e8a838" },
-  { id: "contact", label: "Contact", color: "#60a060" },
-  { id: "resume", label: "Resume", color: "#c0504d" },
+  { id: "contact", label: "Contact", color: "#e8a838" },
+  { id: "resume", label: "Resume", color: "#e8a838" },
 ];
 
 export default function ExplorerSidebar({
@@ -52,7 +53,7 @@ export default function ExplorerSidebar({
       {NAV_APPS.map(({ id, label, color }) => (
         <SidebarRow
           key={id}
-          icon={<FolderIcon color={color} />}
+          icon={id === "resume" ? <PdfIcon /> : <FolderIcon color={color} />}
           label={label}
           active={activeAppId === id}
           pinned

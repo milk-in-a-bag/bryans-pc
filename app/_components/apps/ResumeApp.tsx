@@ -1,4 +1,4 @@
-import ExplorerShell from "../ExplorerShell";
+import NotepadShell from "../NotepadShell";
 export default function ResumeApp() {
-  return <ExplorerShell appId="resume" />;
+  return <NotepadShell />;
 }
