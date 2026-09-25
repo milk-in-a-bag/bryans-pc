@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { AppId, WindowState } from "./types";
 import { APPS } from "./types";
 import StartMenu from "./taskbar/StartMenu";
@@ -28,30 +28,111 @@ function WindowsLogo({ active }: { active: boolean }) {
 
 // ── Weather widget ────────────────────────────────────────────────────────────
 function WeatherWidget() {
+  const [weather, setWeather] = useState<{
+    temp: number | null;
+    condition: string;
+  } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/weather")
+      .then((r) => r.json())
+      .then((d) => setWeather({ temp: d.temp, condition: d.condition }))
+      .catch(() => setWeather({ temp: null, condition: "Unavailable" }));
+  }, []);
+
+  const condition = weather?.condition ?? "...";
+  const temp = weather?.temp != null ? `${weather.temp}°F` : "—";
+
+  // Pick icon based on condition
+  const isRainy =
+    condition.includes("Rain") ||
+    condition.includes("Shower") ||
+    condition.includes("Drizzle");
+  const isCloudy = condition.includes("Cloud") || condition.includes("Fog");
+  const isStormy = condition.includes("Thunder");
+
   return (
     <div
-      className="flex items-center gap-2 px-3 h-10 shrink-0 cursor-default select-none"
-      style={{ borderRadius: 6 }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "0 12px",
+        height: 40,
+        borderRadius: 6,
+        cursor: "default",
+        flexShrink: 0,
+      }}
       onMouseEnter={(e) =>
         (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
       }
       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
-      {/* Sun icon */}
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        style={{ color: "#fbbf24", flexShrink: 0 }}
+      {/* Weather icon */}
+      {isStormy ? (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#a78bfa"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          style={{ flexShrink: 0 }}
+        >
+          <path d="M19 16.9A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+          <polyline points="13 11 9 17 15 17 11 23" stroke="#fbbf24" />
+        </svg>
+      ) : isRainy ? (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#60a5fa"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          style={{ flexShrink: 0 }}
+        >
+          <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" />
+          <line x1="8" y1="19" x2="8" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+          <line x1="16" y1="19" x2="16" y2="21" />
+        </svg>
+      ) : isCloudy ? (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#94a3b8"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          style={{ flexShrink: 0 }}
+        >
+          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+        </svg>
+      ) : (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          style={{ flexShrink: 0 }}
+        >
+          <circle cx="12" cy="12" r="4" fill="#fbbf24" />
+          <path
+            d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+            stroke="#fbbf24"
+          />
+        </svg>
+      )}
+
+      <div
+        style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}
       >
-        <circle cx="12" cy="12" r="4" fill="#fbbf24" stroke="none" />
-        <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-      </svg>
-      <div className="flex flex-col leading-tight">
         <span
           style={{
             fontSize: 12,
@@ -59,10 +140,10 @@ function WeatherWidget() {
             color: "rgba(255,255,255,0.9)",
           }}
         >
-          80°F
+          {temp}
         </span>
         <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>
-          Sunny
+          {condition}
         </span>
       </div>
     </div>
@@ -75,130 +156,7 @@ function SystemTray() {
     <div
       style={{ display: "flex", alignItems: "center", gap: 0, flexShrink: 0 }}
     >
-      {/* Chevron */}
-      <button
-        style={{
-          width: 24,
-          height: 36,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          color: "rgba(255,255,255,0.5)",
-        }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
-        aria-label="Show hidden icons"
-      >
-        <svg
-          width="8"
-          height="8"
-          viewBox="0 0 8 8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        >
-          <path d="M1.5 5.5l2.5-3 2.5 3" />
-        </svg>
-      </button>
-
-      {/* Network + Volume + Battery pill */}
-      <button
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-          padding: "0 8px",
-          height: 36,
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          borderRadius: 4,
-        }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
-        aria-label="Network, sound, battery"
-      >
-        {/* Wifi */}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M1.5 8.5C5.25 4.75 10.35 2.5 12 2.5s6.75 2.25 10.5 6"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity="0.5"
-          />
-          <path
-            d="M5 12c1.9-1.9 4.3-3 7-3s5.1 1.1 7 3"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity="0.65"
-          />
-          <path
-            d="M8.5 15.5c.9-.9 2.2-1.5 3.5-1.5s2.6.6 3.5 1.5"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity="0.8"
-          />
-          <circle cx="12" cy="19" r="1.5" fill="white" opacity="0.95" />
-        </svg>
-        {/* Volume */}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" opacity="0.8" />
-          <path
-            d="M15.5 8.5c1.2 1.2 2 2.8 2 4.5s-.8 3.3-2 4.5"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity="0.9"
-          />
-        </svg>
-        {/* Battery */}
-        <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
-          <rect
-            x="0.5"
-            y="0.5"
-            width="13"
-            height="10"
-            rx="1.5"
-            stroke="white"
-            strokeOpacity="0.7"
-            strokeWidth="1"
-          />
-          <rect
-            x="14"
-            y="3.5"
-            width="1.5"
-            height="4"
-            rx="0.75"
-            fill="white"
-            fillOpacity="0.5"
-          />
-          <rect
-            x="2"
-            y="2"
-            width="8"
-            height="7"
-            rx="0.5"
-            fill="white"
-            fillOpacity="0.85"
-          />
-        </svg>
-      </button>
-
-      {/* Clock */}
       <TaskbarClock />
-
-      {/* Notification bell */}
       <button
         style={{
           width: 32,
