@@ -235,113 +235,40 @@ function SystemTray() {
   );
 }
 
-// ── Open window indicator buttons ─────────────────────────────────────────────
-function WindowButtons({
-  windows,
-  activeWindowId,
-  onTaskbarClick,
-}: {
-  windows: WindowState[];
-  activeWindowId: string | null;
-  onTaskbarClick: (id: string) => void;
-}) {
-  if (windows.length === 0) return null;
-  return (
-    <>
-      <div
-        style={{
-          width: 1,
-          height: 20,
-          background: "rgba(255,255,255,0.1)",
-          margin: "0 4px",
-          flexShrink: 0,
-        }}
-      />
-      {windows.map((win) => {
-        const isActive = win.id === activeWindowId && !win.isMinimized;
-        return (
-          <button
-            key={win.id}
-            onClick={() => onTaskbarClick(win.id)}
-            title={win.title}
-            style={{
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              padding: "0 10px",
-              height: 36,
-              borderRadius: 4,
-              flexShrink: 0,
-              maxWidth: 140,
-              background: isActive ? "rgba(255,255,255,0.12)" : "none",
-              border: "none",
-              cursor: "pointer",
-              color: isActive ? "white" : "rgba(255,255,255,0.65)",
-              fontSize: 12,
-              fontWeight: 400,
-            }}
-            onMouseEnter={(e) => {
-              if (!isActive)
-                (e.currentTarget as HTMLButtonElement).style.background =
-                  "rgba(255,255,255,0.08)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = isActive
-                ? "rgba(255,255,255,0.12)"
-                : "none";
-            }}
-          >
-            <span style={{ fontSize: 14, lineHeight: 1, flexShrink: 0 }}>
-              {win.icon}
-            </span>
-            <span
-              style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {win.title}
-            </span>
-            {/* Active dot */}
-            <span
-              style={{
-                position: "absolute",
-                bottom: 2,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: isActive ? 16 : 4,
-                height: 2,
-                borderRadius: 1,
-                background: isActive ? "#60cdff" : "rgba(255,255,255,0.3)",
-                transition: "width 0.15s",
-              }}
-            />
-          </button>
-        );
-      })}
-    </>
-  );
-}
-
-// ── Pinned app icons (center row, icon-only with open indicator) ──────────────
+// ── Pinned app icons ──────────────────────────────────────────────────────────
+// Clicking an open app focuses/toggles it; clicking a closed one opens it.
 function PinnedApps({
   openAppIds,
+  windows,
+  activeWindowId,
   onOpen,
+  onTaskbarClick,
 }: {
   openAppIds: Set<AppId>;
+  windows: WindowState[];
+  activeWindowId: string | null;
   onOpen: (id: AppId) => void;
+  onTaskbarClick: (id: string) => void;
 }) {
   return (
     <>
       {APPS.map((app) => {
-        const isOpen = openAppIds.has(app.id);
+        const win = windows.find((w) => w.appId === app.id);
+        const isOpen = !!win;
+        const isActive = !!win && win.id === activeWindowId && !win.isMinimized;
+
+        const handleClick = () => {
+          if (win) {
+            onTaskbarClick(win.id); // focus or toggle-minimize
+          } else {
+            onOpen(app.id);
+          }
+        };
+
         return (
           <button
             key={app.id}
-            onDoubleClick={() => onOpen(app.id)}
-            onClick={() => onOpen(app.id)}
+            onClick={handleClick}
             title={app.title}
             style={{
               position: "relative",
@@ -352,18 +279,23 @@ function PinnedApps({
               height: 40,
               borderRadius: 6,
               flexShrink: 0,
-              background: "none",
+              background: isActive ? "rgba(255,255,255,0.12)" : "none",
               border: "none",
               cursor: "pointer",
               fontSize: 20,
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "rgba(255,255,255,0.1)")
-            }
-            onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+            onMouseEnter={(e) => {
+              if (!isActive)
+                (e.currentTarget as HTMLButtonElement).style.background =
+                  "rgba(255,255,255,0.1)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = isActive
+                ? "rgba(255,255,255,0.12)"
+                : "none";
+            }}
           >
             {app.icon}
-            {/* Open indicator dot */}
             {isOpen && (
               <span
                 style={{
@@ -371,10 +303,11 @@ function PinnedApps({
                   bottom: 2,
                   left: "50%",
                   transform: "translateX(-50%)",
-                  width: 4,
-                  height: 4,
-                  borderRadius: "50%",
-                  background: "#60cdff",
+                  width: isActive ? 16 : 4,
+                  height: 3,
+                  borderRadius: 2,
+                  background: isActive ? "#60cdff" : "rgba(255,255,255,0.5)",
+                  transition: "width 0.15s",
                 }}
               />
             )}
@@ -393,7 +326,6 @@ export default function Taskbar({
   onOpenApp,
 }: TaskbarProps) {
   const [startOpen, setStartOpen] = useState(false);
-  const openAppIds = new Set(windows.map((w) => w.appId));
 
   return (
     <div
@@ -513,12 +445,11 @@ export default function Taskbar({
         />
 
         {/* Pinned app icons */}
-        <PinnedApps openAppIds={openAppIds} onOpen={onOpenApp} />
-
-        {/* Open window buttons */}
-        <WindowButtons
+        <PinnedApps
+          openAppIds={new Set(windows.map((w) => w.appId))}
           windows={windows}
           activeWindowId={activeWindowId}
+          onOpen={onOpenApp}
           onTaskbarClick={onTaskbarClick}
         />
       </div>
