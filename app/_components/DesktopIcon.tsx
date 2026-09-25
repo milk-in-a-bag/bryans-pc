@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
-import { useRef, useCallback } from 'react'
-import type { AppConfig } from './types'
+import { useRef, useCallback } from "react";
+import type { AppConfig } from "./types";
 
 interface DesktopIconProps {
-  app: AppConfig
-  isOpen: boolean
-  onOpen: (appId: AppConfig['id']) => void
+  app: AppConfig;
+  isOpen: boolean;
+  onOpen: (appId: AppConfig["id"]) => void;
 }
 
 export default function DesktopIcon({ app, isOpen, onOpen }: DesktopIconProps) {
-  const lastClickTime = useRef(0)
+  const lastClickTime = useRef(0);
 
   // Double-click detection that works on both desktop and touch
   const handleClick = useCallback(() => {
-    const now = Date.now()
+    const now = Date.now();
     if (now - lastClickTime.current < 400) {
-      onOpen(app.id)
-      lastClickTime.current = 0
+      onOpen(app.id);
+      lastClickTime.current = 0;
     } else {
-      lastClickTime.current = now
+      lastClickTime.current = now;
     }
-  }, [app.id, onOpen])
+  }, [app.id, onOpen]);
 
   return (
     <button
@@ -37,10 +37,6 @@ export default function DesktopIcon({ app, isOpen, onOpen }: DesktopIconProps) {
       {/* Icon */}
       <div className="relative flex items-center justify-center w-12 h-12">
         <span className="text-4xl leading-none drop-shadow-md">{app.icon}</span>
-        {/* Blue dot indicator when app is open */}
-        {isOpen && (
-          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#60cdff]" />
-        )}
       </div>
       {/* Label */}
       <span
@@ -53,5 +49,5 @@ export default function DesktopIcon({ app, isOpen, onOpen }: DesktopIconProps) {
         {app.title}
       </span>
     </button>
-  )
+  );
 }

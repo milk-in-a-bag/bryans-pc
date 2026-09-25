@@ -1,4 +1,4 @@
-import NotepadShell from "../NotepadShell";
+import NotepadShell, { RESUME_TEXT } from "../NotepadShell";
 export default function ResumeApp() {
-  return <NotepadShell />;
+  return <NotepadShell text={RESUME_TEXT} />;
 }

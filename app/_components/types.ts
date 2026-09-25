@@ -31,14 +31,14 @@ export const APPS: AppConfig[] = [
   {
     id: "projects",
     title: "Projects",
-    icon: "💼",
+    icon: "📁",
     defaultSize: { width: 900, height: 600 },
     defaultPosition: { x: 120, y: 70 },
   },
   {
     id: "blog",
     title: "Blog",
-    icon: "📝",
+    icon: "📁",
     defaultSize: { width: 880, height: 580 },
     defaultPosition: { x: 110, y: 65 },
   },

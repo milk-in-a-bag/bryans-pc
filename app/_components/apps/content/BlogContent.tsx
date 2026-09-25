@@ -1,127 +1,141 @@
-"use client";
+import FileGrid from "./FileGrid";
+import type { FileItem } from "./FileGrid";
 
-import { useState } from "react";
-
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  readTime: string;
-  excerpt: string;
-  tags: string[];
+interface Props {
+  onOpenFile: (f: FileItem) => void;
 }
 
-const POSTS: Post[] = [
+const POSTS = [
   {
-    slug: "building-scalable-apis",
-    title: "Building Scalable REST APIs with Node.js",
-    date: "Sep 10, 2026",
-    readTime: "6 min read",
-    excerpt:
-      "A deep dive into designing APIs that hold up under load — covering rate limiting, caching strategies, and clean error handling.",
-    tags: ["Node.js", "API", "Backend"],
+    name: "Building Scalable REST APIs",
+    ext: "TXT",
+    text: [
+      "Building Scalable REST APIs with Node.js",
+      "━".repeat(50),
+      "",
+      "Date        Sep 10, 2026",
+      "Read time   6 min",
+      "Tags        Node.js · API · Backend",
+      "",
+      "OVERVIEW",
+      "─".repeat(50),
+      "A deep dive into designing APIs that hold up under",
+      "load — covering rate limiting, caching strategies,",
+      "and clean error handling.",
+      "",
+      "KEY TOPICS",
+      "─".repeat(50),
+      "  • Rate limiting strategies (token bucket, sliding window)",
+      "  • Response caching with Redis",
+      "  • Structured error handling and status codes",
+      "  • Request validation with Zod",
+      "  • Logging and observability",
+      "",
+      "TAKEAWAYS",
+      "─".repeat(50),
+      "Good API design is mostly about predictability.",
+      "Make errors descriptive, responses consistent,",
+      "and always think about what happens under load.",
+    ].join("\n"),
   },
   {
-    slug: "nextjs-app-router",
-    title: "Lessons from the Next.js App Router",
-    date: "Aug 22, 2026",
-    readTime: "5 min read",
-    excerpt:
-      "After shipping several projects with the App Router, here are the patterns that stuck and the gotchas worth knowing about.",
-    tags: ["Next.js", "React", "Frontend"],
+    name: "Lessons from the App Router",
+    ext: "TXT",
+    text: [
+      "Lessons from the Next.js App Router",
+      "━".repeat(50),
+      "",
+      "Date        Aug 22, 2026",
+      "Read time   5 min",
+      "Tags        Next.js · React · Frontend",
+      "",
+      "OVERVIEW",
+      "─".repeat(50),
+      "After shipping several projects with the App Router,",
+      "here are the patterns that stuck and the gotchas",
+      "worth knowing about.",
+      "",
+      "KEY TOPICS",
+      "─".repeat(50),
+      "  • Server vs. client components — where to draw the line",
+      "  • Parallel routes and intercepting routes",
+      "  • Data fetching patterns with async components",
+      "  • Caching behaviour and revalidation",
+      "",
+      "TAKEAWAYS",
+      "─".repeat(50),
+      "The App Router rewards you for thinking in components",
+      "that do one thing. Keep client components at the leaves",
+      "of your tree and fetch data as close to where you",
+      "need it as possible.",
+    ].join("\n"),
   },
   {
-    slug: "typescript-tips",
-    title: "TypeScript Tips I Wish I Knew Earlier",
-    date: "Jul 14, 2026",
-    readTime: "4 min read",
-    excerpt:
-      "Practical utility types, discriminated unions, and a few patterns that cut boilerplate without sacrificing safety.",
-    tags: ["TypeScript"],
+    name: "TypeScript Tips",
+    ext: "TXT",
+    text: [
+      "TypeScript Tips I Wish I Knew Earlier",
+      "━".repeat(50),
+      "",
+      "Date        Jul 14, 2026",
+      "Read time   4 min",
+      "Tags        TypeScript",
+      "",
+      "OVERVIEW",
+      "─".repeat(50),
+      "Practical utility types, discriminated unions, and",
+      "a few patterns that cut boilerplate without",
+      "sacrificing safety.",
+      "",
+      "KEY TOPICS",
+      "─".repeat(50),
+      "  • Discriminated unions for state machines",
+      "  • Template literal types",
+      "  • Infer keyword in conditional types",
+      "  • Satisfies operator",
+      "  • const assertions",
+      "",
+      "TAKEAWAYS",
+      "─".repeat(50),
+      "TypeScript's type system is much more powerful than",
+      "most people use. Learning a few advanced patterns",
+      "pays dividends across every project.",
+    ].join("\n"),
   },
   {
-    slug: "postgres-performance",
-    title: "PostgreSQL Performance for Developers",
-    date: "Jun 3, 2026",
-    readTime: "7 min read",
-    excerpt:
-      "Indexing strategies, query planning, and connection pooling — the parts of Postgres that make the biggest difference.",
-    tags: ["PostgreSQL", "Database", "Backend"],
+    name: "PostgreSQL Performance",
+    ext: "TXT",
+    text: [
+      "PostgreSQL Performance for Developers",
+      "━".repeat(50),
+      "",
+      "Date        Jun 3, 2026",
+      "Read time   7 min",
+      "Tags        PostgreSQL · Database · Backend",
+      "",
+      "OVERVIEW",
+      "─".repeat(50),
+      "Indexing strategies, query planning, and connection",
+      "pooling — the parts of Postgres that make the",
+      "biggest difference in production.",
+      "",
+      "KEY TOPICS",
+      "─".repeat(50),
+      "  • B-tree vs. GIN vs. BRIN indexes",
+      "  • Reading EXPLAIN ANALYZE output",
+      "  • N+1 query patterns and how to avoid them",
+      "  • Connection pooling with PgBouncer",
+      "  • Vacuuming and table bloat",
+      "",
+      "TAKEAWAYS",
+      "─".repeat(50),
+      "Most Postgres performance issues come down to missing",
+      "indexes or misunderstood query patterns. Start with",
+      "EXPLAIN ANALYZE before reaching for anything else.",
+    ].join("\n"),
   },
 ];
 
-export default function BlogContent() {
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-  const allTags = Array.from(new Set(POSTS.flatMap((p) => p.tags)));
-  const filtered = activeTag
-    ? POSTS.filter((p) => p.tags.includes(activeTag))
-    : POSTS;
-
-  return (
-    <div className="p-6 text-white/90 font-sans">
-      <div className="max-w-3xl flex flex-col gap-5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-white">Blog</h1>
-          <span className="text-xs text-white/40">{POSTS.length} posts</span>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setActiveTag(null)}
-            className={`text-[11px] px-3 py-1 rounded-full border transition-colors ${activeTag === null ? "bg-[#0078d4] border-[#0078d4] text-white" : "border-white/15 text-white/50 hover:border-white/30 hover:text-white/80"}`}
-          >
-            All
-          </button>
-          {allTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setActiveTag(tag === activeTag ? null : tag)}
-              className={`text-[11px] px-3 py-1 rounded-full border transition-colors ${activeTag === tag ? "bg-[#0078d4] border-[#0078d4] text-white" : "border-white/15 text-white/50 hover:border-white/30 hover:text-white/80"}`}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex flex-col gap-3">
-          {filtered.map((post) => (
-            <article
-              key={post.slug}
-              className="rounded-xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.07] transition-colors cursor-pointer group"
-            >
-              <h2 className="text-[14px] font-semibold text-white leading-snug group-hover:text-[#60cdff] transition-colors mb-2">
-                {post.title}
-              </h2>
-              <p className="text-sm text-white/55 leading-relaxed mb-3">
-                {post.excerpt}
-              </p>
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <div className="flex flex-wrap gap-1.5">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[11px] px-2 py-0.5 rounded bg-white/10 text-white/50"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-white/35 shrink-0">
-                  <span>{post.date}</span>
-                  <span>·</span>
-                  <span>{post.readTime}</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <p className="text-sm text-white/30 text-center py-8">
-            No posts for this tag.
-          </p>
-        )}
-      </div>
-    </div>
-  );
+export default function BlogContent({ onOpenFile }: Props) {
+  return <FileGrid files={POSTS} label="posts" onOpenFile={onOpenFile} />;
 }

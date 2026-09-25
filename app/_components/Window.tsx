@@ -124,10 +124,10 @@ export default function Window({
         onMinimize={() => onMinimize(win.id)}
         onMaximize={() => onMaximize(win.id)}
       />
-      {win.appId !== "resume" && (
+      {win.appId !== "resume" && win.appId !== "about" && (
         <WindowNavBar icon={win.icon} title={win.title} />
       )}
-      {win.appId !== "resume" && <WindowToolbar />}
+      {win.appId !== "resume" && win.appId !== "about" && <WindowToolbar />}
 
       <div
         className="flex-1 flex"

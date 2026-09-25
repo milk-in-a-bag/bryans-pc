@@ -2,6 +2,7 @@
 
 import { EXPERIENCE, EDUCATION, SKILLS_GROUPS } from "./apps/resume/resumeData";
 
+// ── Resume text ───────────────────────────────────────────────────────────────
 function buildResumeText(): string {
   const lines: string[] = [];
   lines.push("Bryan Mayodi");
@@ -30,8 +31,57 @@ function buildResumeText(): string {
   return lines.join("\n");
 }
 
-const RESUME_TEXT = buildResumeText();
+// ── About text ────────────────────────────────────────────────────────────────
+function buildAboutText(): string {
+  const lines: string[] = [];
+  lines.push("Bryan Mayodi");
+  lines.push("Fullstack Developer");
+  lines.push("━".repeat(60));
+  lines.push("");
+  lines.push("ABOUT");
+  lines.push("─".repeat(60));
+  lines.push(
+    "Hey, I'm Bryan — a fullstack developer who enjoys building clean,",
+  );
+  lines.push(
+    "performant web applications from the ground up. I care about good",
+  );
+  lines.push("architecture, great UX, and code that's easy to reason about.");
+  lines.push("");
+  lines.push(
+    "I work across the stack — designing APIs, building databases, and",
+  );
+  lines.push(
+    "crafting interfaces that feel native. I'm always exploring new tools",
+  );
+  lines.push("and patterns to keep my work sharp.");
+  lines.push("");
+  lines.push("SKILLS");
+  lines.push("─".repeat(60));
+  const skills = [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "PostgreSQL",
+    "Tailwind CSS",
+    "REST APIs",
+    "Git",
+  ];
+  lines.push(skills.join("  ·  "));
+  lines.push("");
+  lines.push("QUICK FACTS");
+  lines.push("─".repeat(60));
+  lines.push("Role          Fullstack Developer");
+  lines.push("Focus         Web Applications");
+  lines.push("Available     Open to opportunities");
+  return lines.join("\n");
+}
 
+export const RESUME_TEXT = buildResumeText();
+export const ABOUT_TEXT = buildAboutText();
+
+// ── Shared shell ──────────────────────────────────────────────────────────────
 function MenuBar() {
   return (
     <div
@@ -103,7 +153,11 @@ function StatusBar({ charCount }: { charCount: number }) {
   );
 }
 
-export default function NotepadShell() {
+interface NotepadShellProps {
+  text: string;
+}
+
+export default function NotepadShell({ text }: NotepadShellProps) {
   return (
     <div
       style={{
@@ -120,7 +174,7 @@ export default function NotepadShell() {
       <textarea
         readOnly
         wrap="off"
-        defaultValue={RESUME_TEXT}
+        defaultValue={text}
         spellCheck={false}
         style={{
           flex: 1,
@@ -142,7 +196,7 @@ export default function NotepadShell() {
           boxSizing: "border-box",
         }}
       />
-      <StatusBar charCount={RESUME_TEXT.length} />
+      <StatusBar charCount={text.length} />
     </div>
   );
 }

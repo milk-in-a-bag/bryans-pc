@@ -1,4 +1,4 @@
-import ExplorerShell from "../ExplorerShell";
+import NotepadShell, { ABOUT_TEXT } from "../NotepadShell";
 export default function AboutApp() {
-  return <ExplorerShell appId="about" />;
+  return <NotepadShell text={ABOUT_TEXT} />;
 }
