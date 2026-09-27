@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fluentui/svg-icons':
+        specifier: ^1.1.343
+        version: 1.1.343
       next:
         specifier: 16.3.6
         version: 16.3.6(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -171,6 +174,9 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fluentui/svg-icons@1.1.343':
+    resolution: {integrity: sha512-+rlKFnM2MkAg2G0qMD3BM/K3jC+Jc+VAKgxE7x9cpCPDDNpwKaOSD0DntUkVXrZGOjBvfmID0DoRslsXbC8X5Q==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -2183,6 +2189,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fluentui/svg-icons@1.1.343': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

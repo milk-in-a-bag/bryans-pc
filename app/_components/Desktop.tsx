@@ -1,10 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import { APPS } from "./types";
 import type { AppId } from "./types";
 import { useDesktopWindows } from "./useDesktopWindows";
 import Window from "./Window";
-import DesktopIcon from "./DesktopIcon";
+import DesktopIcon, { ThisPCIcon, RecycleBinIcon } from "./DesktopIcon";
 import Taskbar from "./Taskbar";
 import AboutApp from "./apps/AboutApp";
 import ProjectsApp from "./apps/ProjectsApp";
@@ -19,6 +20,34 @@ const APP_CONTENT: Record<AppId, React.ReactNode> = {
   contact: <ContactApp />,
   resume: <ResumeApp />,
 };
+
+function StaticDesktopIcon({
+  id,
+  label,
+  icon,
+}: {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+}) {
+  const lastClick = useRef(0);
+  return (
+    <button
+      onClick={() => {
+        lastClick.current = Date.now();
+      }}
+      className="group flex flex-col items-center gap-1.5 p-2 rounded-lg w-20 transition-colors duration-100 cursor-default select-none hover:bg-white/10 active:bg-white/20 focus:outline-none"
+      aria-label={id}
+    >
+      <div className="flex items-center justify-center w-12 h-12 drop-shadow-lg">
+        {icon}
+      </div>
+      <span className="text-[11px] font-medium text-center leading-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] max-w-full truncate w-full px-0.5">
+        {label}
+      </span>
+    </button>
+  );
+}
 
 export default function Desktop() {
   const {
@@ -36,13 +65,7 @@ export default function Desktop() {
   const openAppIds = new Set(windows.map((w) => w.appId));
 
   return (
-    <div
-      className="relative w-full h-full overflow-hidden select-none"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) {
-        }
-      }}
-    >
+    <div className="relative w-full h-full overflow-hidden select-none">
       {/* Wallpaper */}
       <div
         className="absolute inset-0"
@@ -70,6 +93,12 @@ export default function Desktop() {
             onOpen={openApp}
           />
         ))}
+        <StaticDesktopIcon id="thispc" label="This PC" icon={<ThisPCIcon />} />
+        <StaticDesktopIcon
+          id="recycle"
+          label="Recycle Bin"
+          icon={<RecycleBinIcon />}
+        />
       </div>
 
       {/* Windows */}
