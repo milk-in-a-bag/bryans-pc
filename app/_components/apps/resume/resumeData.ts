@@ -1,55 +1,68 @@
 export interface TimelineItem {
-  title: string
-  org: string
-  period: string
-  bullets: string[]
+  title: string;
+  org: string;
+  period: string;
+  bullets: string[];
 }
 
 export const EXPERIENCE: TimelineItem[] = [
   {
-    title: 'Senior Fullstack Developer',
-    org: 'Company Name',
-    period: '2024 – Present',
+    title: "Full Stack Developer",
+    org: "DigitalQatalyst",
+    period: "Aug 2025 – Sep 2026",
     bullets: [
-      'Architected and shipped multiple full-product features across a Next.js + Node.js stack',
-      'Led performance optimizations reducing page load by 40%',
-      'Mentored junior developers and ran weekly code reviews',
+      "Built and maintained full-stack web applications using React, Next.js, TypeScript, Express.js, and Supabase.",
+      "Integrated Microsoft Dataverse CRM, Power Apps, and Power Pages to automate and streamline client business processes.",
+      "Architected reusable component libraries and scalable API integrations, reducing development time across projects.",
+      "Collaborated with cross-functional teams to translate product requirements into high-performance, production-ready systems.",
     ],
   },
   {
-    title: 'Fullstack Developer',
-    org: 'Previous Company',
-    period: '2022 – 2024',
+    title: "Software Engineering Intern",
+    org: "Senate of Kenya",
+    period: "Jan 2025 – Jul 2025",
     bullets: [
-      'Built RESTful APIs consumed by web and mobile clients',
-      'Migrated a legacy monolith to a service-oriented architecture',
-      'Owned the PostgreSQL schema design and query optimization',
+      "Designed and developed an internal web portal for the Senate Journals Office to manage and retrieve official documents digitally.",
+      "Defined system architecture and user flows, producing technical blueprints adopted by the IT team for implementation.",
     ],
   },
   {
-    title: 'Frontend Developer',
-    org: 'Startup',
-    period: '2020 – 2022',
+    title: "Software Engineering Intern",
+    org: "Qalibrated Systems Limited",
+    period: "May 2024 – Oct 2024",
     bullets: [
-      'Developed responsive UIs with React and TypeScript',
-      'Collaborated closely with designers to implement pixel-perfect interfaces',
-      'Integrated third-party APIs and payment systems',
+      "Enhanced and maintained a calibration management software platform used by enterprise clients.",
+      "Collaborated with the dev team to build and test new features, improving overall application efficiency.",
+      "Managed application deployment pipelines using Linux and command-line utilities.",
     ],
   },
-]
+];
 
 export const EDUCATION: TimelineItem[] = [
   {
-    title: 'B.Sc. Computer Science',
-    org: 'University Name',
-    period: '2016 – 2020',
-    bullets: ['Focused on software engineering and distributed systems'],
+    title: "B.Sc. Software Engineering",
+    org: "Multimedia University of Kenya",
+    period: "2024",
+    bullets: ["Second Class Honours"],
   },
-]
+  {
+    title: "Kenya Certificate of Secondary Education",
+    org: "The Nairobi School",
+    period: "2019",
+    bullets: ["Grade A-"],
+  },
+];
 
 export const SKILLS_GROUPS = [
-  { label: 'Frontend',  items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML/CSS'] },
-  { label: 'Backend',   items: ['Node.js', 'Express', 'REST APIs', 'GraphQL'] },
-  { label: 'Database',  items: ['PostgreSQL', 'MySQL', 'Redis'] },
-  { label: 'Tools',     items: ['Git', 'Docker', 'CI/CD', 'Linux'] },
-]
+  { label: "Languages", items: ["JavaScript", "TypeScript", "Python", "SQL"] },
+  {
+    label: "Frontend",
+    items: ["React.js", "Next.js", "Tailwind CSS", "Shadcn UI", "Figma"],
+  },
+  {
+    label: "Backend",
+    items: ["Node.js", "Express.js", "Django", "Django REST Framework"],
+  },
+  { label: "Databases", items: ["PostgreSQL", "Supabase", "Neon"] },
+  { label: "Tools", items: ["Git", "GitHub", "WSL", "Claude Code"] },
+];

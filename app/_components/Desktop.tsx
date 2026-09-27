@@ -84,7 +84,10 @@ export default function Desktop() {
       />
 
       {/* Desktop icons */}
-      <div className="absolute top-6 left-6 flex flex-col gap-1">
+      <div
+        className="absolute top-6 left-6 flex flex-col flex-wrap gap-1"
+        style={{ maxHeight: "calc(100vh - 80px)" }}
+      >
         {APPS.map((app) => (
           <DesktopIcon
             key={app.id}

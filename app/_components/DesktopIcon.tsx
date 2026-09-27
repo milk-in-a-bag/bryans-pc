@@ -115,10 +115,35 @@ export default function DesktopIcon({
       className="group flex flex-col items-center gap-1.5 p-2 rounded-lg w-20 transition-colors duration-100 cursor-default select-none hover:bg-white/10 active:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
       aria-label={`Open ${app.title}`}
     >
-      <div className="flex items-center justify-center w-12 h-12 drop-shadow-lg">
+      <div className="flex items-center justify-center w-12 h-12 drop-shadow-lg relative">
         {ICONS[app.id] ?? (
           <span className="text-4xl leading-none">{app.icon}</span>
         )}
+        {/* Shortcut arrow badge */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: 16,
+            height: 16,
+            background: "#1a1a1a",
+            borderRadius: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <svg
+            width="11"
+            height="11"
+            viewBox="0 0 11 11"
+            fill="white"
+            opacity="0.9"
+          >
+            <path d="M1 10V4.5h1.8V8.2H6.5V10H1ZM5 1h5v5L8.3 4.3 5.7 7 4 5.3l2.7-2.7L5 1Z" />
+          </svg>
+        </div>
       </div>
       <span className="text-[11px] font-medium text-center leading-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] max-w-full truncate w-full px-0.5">
         {app.title}

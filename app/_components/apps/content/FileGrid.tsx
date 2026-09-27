@@ -4,79 +4,23 @@ import { useRef } from "react";
 
 export interface FileItem {
   name: string;
-  ext?: string;
   text: string;
 }
 
-// ── Document icon ─────────────────────────────────────────────────────────────
-function DocIcon({ ext = "TXT" }: { ext?: string }) {
+// Clean document icon — same style as Resume but no badge
+function DocIcon() {
   return (
     <svg width="48" height="56" viewBox="0 0 48 56" fill="none">
-      <rect
-        x="4"
-        y="2"
-        width="36"
-        height="46"
-        rx="2"
-        fill="#2d2d2d"
-        stroke="rgba(255,255,255,0.15)"
-        strokeWidth="1"
-      />
-      <path
-        d="M32 2l8 8H32V2Z"
-        fill="#3a3a3a"
-        stroke="rgba(255,255,255,0.15)"
-        strokeWidth="1"
-      />
-      <rect
-        x="10"
-        y="18"
-        width="20"
-        height="1.5"
-        rx="0.75"
-        fill="rgba(255,255,255,0.25)"
-      />
-      <rect
-        x="10"
-        y="23"
-        width="24"
-        height="1.5"
-        rx="0.75"
-        fill="rgba(255,255,255,0.25)"
-      />
-      <rect
-        x="10"
-        y="28"
-        width="18"
-        height="1.5"
-        rx="0.75"
-        fill="rgba(255,255,255,0.25)"
-      />
-      <rect
-        x="10"
-        y="33"
-        width="22"
-        height="1.5"
-        rx="0.75"
-        fill="rgba(255,255,255,0.25)"
-      />
-      <rect x="8" y="38" width="22" height="8" rx="1" fill="#0078d4" />
-      <text
-        x="19"
-        y="45"
-        textAnchor="middle"
-        fontSize="5.5"
-        fontWeight="700"
-        fill="white"
-        fontFamily="Arial,sans-serif"
-      >
-        {ext}
-      </text>
+      <rect x="4" y="2" width="36" height="46" rx="2" fill="#c8c8c8" />
+      <path d="M32 2l8 8H32V2Z" fill="#a8a8a8" />
+      <rect x="10" y="18" width="20" height="2" rx="1" fill="#888" />
+      <rect x="10" y="24" width="24" height="2" rx="1" fill="#aaa" />
+      <rect x="10" y="30" width="18" height="2" rx="1" fill="#aaa" />
+      <rect x="10" y="36" width="22" height="2" rx="1" fill="#aaa" />
     </svg>
   );
 }
 
-// ── Single file icon ──────────────────────────────────────────────────────────
 function FileIcon({
   item,
   onOpen,
@@ -117,7 +61,7 @@ function FileIcon({
       }
       onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
     >
-      <DocIcon ext={item.ext ?? "TXT"} />
+      <DocIcon />
       <span
         style={{
           fontSize: 11,
@@ -134,7 +78,6 @@ function FileIcon({
   );
 }
 
-// ── Grid ──────────────────────────────────────────────────────────────────────
 interface FileGridProps {
   files: FileItem[];
   label: string;

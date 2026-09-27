@@ -1,87 +1,140 @@
 "use client";
 
-import { EXPERIENCE, EDUCATION, SKILLS_GROUPS } from "./apps/resume/resumeData";
+export const RESUME_TEXT = [
+  "Bryan Kerry Mayodi",
+  "Nairobi, Kenya  ·  bryanmayodi@gmail.com  ·  +254 115 622 928",
+  "━".repeat(65),
+  "",
+  "PROFILE",
+  "─".repeat(65),
+  "Fullstack web developer with hands-on experience building production-grade",
+  "applications using Next.js, TypeScript, Express.js and Django. Comfortable",
+  "across the stack, from designing clean, responsive UIs to architecting",
+  "RESTful APIs and managing databases. I enjoy building client-facing and",
+  "internal tools, with experience in enterprise software contexts. Looking for",
+  "a role where I can ship meaningful products and keep growing fast.",
+  "",
+  "LINKS",
+  "─".repeat(65),
+  "LinkedIn    linkedin.com/in/bryanmayodi",
+  "Portfolio   bryans-pc.vercel.app",
+  "",
+  "EMPLOYMENT HISTORY",
+  "─".repeat(65),
+  "Aug 2025 – Sep 2026   Full Stack Developer, DigitalQatalyst · Nairobi",
+  "  • Built and maintained full-stack web applications using React, Next.js,",
+  "    TypeScript, Express.js, and Supabase.",
+  "  • Integrated Microsoft Dataverse CRM, Power Apps, and Power Pages to",
+  "    automate and streamline client business processes.",
+  "  • Architected reusable component libraries and scalable API integrations,",
+  "    reducing development time across projects.",
+  "  • Collaborated with cross-functional teams to translate product requirements",
+  "    into high-performance, production-ready systems.",
+  "",
+  "Jan 2025 – Jul 2025   Software Engineering Intern, Senate of Kenya · Nairobi",
+  "  • Designed and developed an internal web portal for the Senate Journals",
+  "    Office to manage and retrieve official documents digitally.",
+  "  • Defined system architecture and user flows, producing technical blueprints",
+  "    adopted by the IT team for implementation.",
+  "",
+  "May 2024 – Oct 2024   Software Engineering Intern, Qalibrated Systems · Nairobi",
+  "  • Enhanced and maintained a calibration management software platform used",
+  "    by enterprise clients.",
+  "  • Collaborated with the dev team to build and test new features, improving",
+  "    overall application efficiency.",
+  "  • Managed application deployment pipelines using Linux and CLI utilities.",
+  "",
+  "PROJECTS",
+  "─".repeat(65),
+  "M-Pesa Finance Tracker                    github.com/milk-in-a-bag/finance-tracker",
+  "Stack: Next.js · TypeScript · Prisma · PostgreSQL · PWA",
+  "  • Built a finance tracker that auto-captures M-Pesa transactions via SMS",
+  "    parsing, with rule-based categorization and a Next.js dashboard.",
+  "  • Shipped as an installable, offline-capable PWA with a custom service",
+  "    worker, deployed on Vercel with a Neon Postgres database.",
+  "",
+  "Restaurant Engine                         github.com/milk-in-a-bag/restaurant-engine",
+  "Stack: Express · TypeScript · Supabase · Strapi · PostgreSQL",
+  "  • Building a WhatsApp-integrated, multi-tenant digital menu platform for",
+  "    Nairobi restaurants with a wa.me ordering flow and loyalty stamp mechanic.",
+  "  • Designed the multi-tenant schema (restaurants, branches, customers,",
+  "    loyalty, orders) and integrated a Strapi CMS with Cloudinary.",
+  "",
+  "AREAS OF EXPERTISE",
+  "─".repeat(65),
+  "Languages     JavaScript, TypeScript, Python, SQL",
+  "Frontend      React.js, Next.js, Tailwind CSS, Shadcn UI, Figma",
+  "Backend       Node.js, Express.js, Django, Django REST Framework",
+  "Databases     PostgreSQL, Supabase, Neon",
+  "Tools         Git, GitHub, Windows Subsystem for Linux, Claude Code",
+  "",
+  "EDUCATION",
+  "─".repeat(65),
+  "2024   Bachelor of Science in Software Engineering",
+  "       Multimedia University of Kenya · Second Class Honours",
+  "",
+  "2019   Kenya Certificate of Secondary Education",
+  "       The Nairobi School, Nairobi · Grade A-",
+  "",
+  "REFERENCES",
+  "─".repeat(65),
+  "Stephanie Njunge   Dev Lead, DigitalQatalyst",
+  "                   wnjunge19@gmail.com · +254 700 702 332",
+  "",
+  "Sammy Moruri       Full Stack Developer, Galaxyl Tech",
+  "                   morurisammy5@gmail.com · +254 112 686783",
+  "",
+  "Yusuf Duale        Clerk Assistant, Senate of Kenya",
+  "                   dualeyussuf@gmail.com · +254 797 515600",
+  "",
+  "Zephaniah Adar     Lead Software Engineer, CAMEA",
+  "                   adarzeph@gmail.com · +254 701 411321",
+].join("\n");
 
-// ── Resume text ───────────────────────────────────────────────────────────────
-function buildResumeText(): string {
-  const lines: string[] = [];
-  lines.push("Bryan Mayodi");
-  lines.push("Fullstack Developer");
-  lines.push("━".repeat(60));
-  lines.push("");
-  lines.push("EXPERIENCE");
-  lines.push("─".repeat(60));
-  for (const item of EXPERIENCE) {
-    lines.push(`${item.title}  |  ${item.org}  |  ${item.period}`);
-    for (const b of item.bullets) lines.push(`  • ${b}`);
-    lines.push("");
-  }
-  lines.push("EDUCATION");
-  lines.push("─".repeat(60));
-  for (const item of EDUCATION) {
-    lines.push(`${item.title}  |  ${item.org}  |  ${item.period}`);
-    for (const b of item.bullets) lines.push(`  • ${b}`);
-    lines.push("");
-  }
-  lines.push("SKILLS");
-  lines.push("─".repeat(60));
-  for (const group of SKILLS_GROUPS) {
-    lines.push(`${group.label.padEnd(12)}  ${group.items.join("  ·  ")}`);
-  }
-  return lines.join("\n");
-}
+export const ABOUT_TEXT = [
+  "Bryan Kerry Mayodi",
+  "Nairobi, Kenya  ·  bryanmayodi@gmail.com  ·  +254 115 622 928",
+  "━".repeat(65),
+  "",
+  "PROFILE",
+  "─".repeat(65),
+  "Fullstack web developer with hands-on experience building production-grade",
+  "applications using Next.js, TypeScript, Express.js and Django. Comfortable",
+  "across the stack, from designing clean, responsive UIs to architecting",
+  "RESTful APIs and managing databases. I enjoy building client-facing and",
+  "internal tools, with experience in enterprise software contexts. Looking for",
+  "a role where I can ship meaningful products and keep growing fast.",
+  "",
+  "LINKS",
+  "─".repeat(65),
+  "LinkedIn    linkedin.com/in/bryanmayodi",
+  "Portfolio   bryans-pc.vercel.app",
+  "",
+  "SKILLS",
+  "─".repeat(65),
+  "Languages     JavaScript, TypeScript, Python, SQL",
+  "Frontend      React.js, Next.js, Tailwind CSS, Shadcn UI, Figma",
+  "Backend       Node.js, Express.js, Django, Django REST Framework",
+  "Databases     PostgreSQL, Supabase, Neon",
+  "Tools         Git, GitHub, Windows Subsystem for Linux, Claude Code",
+  "",
+  "EDUCATION",
+  "─".repeat(65),
+  "2024   Bachelor of Science in Software Engineering",
+  "       Multimedia University of Kenya · Second Class Honours",
+  "",
+  "2019   Kenya Certificate of Secondary Education",
+  "       The Nairobi School, Nairobi · Grade A-",
+  "",
+  "QUICK FACTS",
+  "─".repeat(65),
+  "Role          Full Stack Developer",
+  "Location      Nairobi, Kenya",
+  "Available     Open to opportunities",
+  "Email         bryanmayodi@gmail.com",
+  "Phone         +254 115 622 928",
+].join("\n");
 
-// ── About text ────────────────────────────────────────────────────────────────
-function buildAboutText(): string {
-  const lines: string[] = [];
-  lines.push("Bryan Mayodi");
-  lines.push("Fullstack Developer");
-  lines.push("━".repeat(60));
-  lines.push("");
-  lines.push("ABOUT");
-  lines.push("─".repeat(60));
-  lines.push(
-    "Hey, I'm Bryan — a fullstack developer who enjoys building clean,",
-  );
-  lines.push(
-    "performant web applications from the ground up. I care about good",
-  );
-  lines.push("architecture, great UX, and code that's easy to reason about.");
-  lines.push("");
-  lines.push(
-    "I work across the stack — designing APIs, building databases, and",
-  );
-  lines.push(
-    "crafting interfaces that feel native. I'm always exploring new tools",
-  );
-  lines.push("and patterns to keep my work sharp.");
-  lines.push("");
-  lines.push("SKILLS");
-  lines.push("─".repeat(60));
-  const skills = [
-    "TypeScript",
-    "React",
-    "Next.js",
-    "Node.js",
-    "PostgreSQL",
-    "Tailwind CSS",
-    "REST APIs",
-    "Git",
-  ];
-  lines.push(skills.join("  ·  "));
-  lines.push("");
-  lines.push("QUICK FACTS");
-  lines.push("─".repeat(60));
-  lines.push("Role          Fullstack Developer");
-  lines.push("Focus         Web Applications");
-  lines.push("Available     Open to opportunities");
-  return lines.join("\n");
-}
-
-export const RESUME_TEXT = buildResumeText();
-export const ABOUT_TEXT = buildAboutText();
-
-// ── Shared shell ──────────────────────────────────────────────────────────────
 function MenuBar() {
   return (
     <div
@@ -153,11 +206,7 @@ function StatusBar({ charCount }: { charCount: number }) {
   );
 }
 
-interface NotepadShellProps {
-  text: string;
-}
-
-export default function NotepadShell({ text }: NotepadShellProps) {
+export default function NotepadShell({ text }: { text: string }) {
   return (
     <div
       style={{
