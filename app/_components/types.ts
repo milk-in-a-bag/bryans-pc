@@ -1,4 +1,10 @@
-export type AppId = "about" | "projects" | "blog" | "contact" | "resume";
+export type AppId =
+  | "about"
+  | "projects"
+  | "blog"
+  | "contact"
+  | "resume"
+  | "recycle";
 
 export interface AppConfig {
   id: AppId;
@@ -55,5 +61,12 @@ export const APPS: AppConfig[] = [
     icon: "📄",
     defaultSize: { width: 900, height: 620 },
     defaultPosition: { x: 115, y: 60 },
+  },
+  {
+    id: "recycle",
+    title: "Recycle Bin",
+    icon: "🗑️",
+    defaultSize: { width: 860, height: 560 },
+    defaultPosition: { x: 140, y: 80 },
   },
 ];

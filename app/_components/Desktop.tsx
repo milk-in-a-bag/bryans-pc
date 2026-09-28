@@ -5,7 +5,7 @@ import { APPS } from "./types";
 import type { AppId } from "./types";
 import { useDesktopWindows } from "./useDesktopWindows";
 import Window from "./Window";
-import DesktopIcon, { ThisPCIcon, RecycleBinIcon } from "./DesktopIcon";
+import DesktopIcon, { ThisPCIcon } from "./DesktopIcon";
 import Taskbar from "./Taskbar";
 import AboutApp from "./apps/AboutApp";
 import ProjectsApp from "./apps/ProjectsApp";
@@ -13,12 +13,15 @@ import BlogApp from "./apps/BlogApp";
 import ContactApp from "./apps/ContactApp";
 import ResumeApp from "./apps/ResumeApp";
 
+import RecycleBinApp from "./apps/RecycleBinApp";
+
 const APP_CONTENT: Record<AppId, React.ReactNode> = {
   about: <AboutApp />,
   projects: <ProjectsApp />,
   blog: <BlogApp />,
   contact: <ContactApp />,
   resume: <ResumeApp />,
+  recycle: <RecycleBinApp />,
 };
 
 function StaticDesktopIcon({
@@ -97,11 +100,6 @@ export default function Desktop() {
           />
         ))}
         <StaticDesktopIcon id="thispc" label="This PC" icon={<ThisPCIcon />} />
-        <StaticDesktopIcon
-          id="recycle"
-          label="Recycle Bin"
-          icon={<RecycleBinIcon />}
-        />
       </div>
 
       {/* Windows */}

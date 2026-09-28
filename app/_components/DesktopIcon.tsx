@@ -83,6 +83,7 @@ const ICONS: Record<string, React.ReactNode> = {
   blog: <BlogIcon />,
   contact: <ContactIcon />,
   resume: <ResumeIcon />,
+  recycle: <RecycleBinIcon />,
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────

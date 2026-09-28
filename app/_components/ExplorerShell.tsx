@@ -6,16 +6,94 @@ import ExplorerSidebar from "./ExplorerSidebar";
 import ProjectsContent from "./apps/content/ProjectsContent";
 import BlogContent from "./apps/content/BlogContent";
 import ContactContent from "./apps/content/ContactContent";
-import NotepadShell, { RESUME_TEXT, ABOUT_TEXT } from "./NotepadShell";
+import NotepadShell, { RESUME_TEXT } from "./NotepadShell";
+import DocumentViewerShell from "./DocumentViewerShell";
 
-const NOTEPAD_APPS = new Set<AppId>(["resume", "about"]);
+// Apps that skip Explorer chrome entirely and manage their own layout
+const BARE_APPS = new Set<AppId>(["resume", "about"]);
+
+function RecycleBinContent() {
+  const colStyle: React.CSSProperties = {
+    fontSize: 12,
+    color: "rgba(255,255,255,0.55)",
+    padding: "0 12px",
+    height: 28,
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+  };
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          background: "#1e1e1e",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          flexShrink: 0,
+        }}
+      >
+        {[
+          ["Name", 2],
+          ["Original Location", 2],
+          ["Date Deleted", 1],
+          ["Size", 1],
+          ["Item type", 1],
+        ].map(([h, f]) => (
+          <div
+            key={String(h)}
+            style={{
+              ...colStyle,
+              flex: Number(f),
+              borderRight: "1px solid rgba(255,255,255,0.05)",
+            }}
+            onMouseEnter={(e) =>
+              ((e.currentTarget as HTMLDivElement).style.background =
+                "rgba(255,255,255,0.04)")
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget as HTMLDivElement).style.background =
+                "transparent")
+            }
+          >
+            {h}
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+          This folder is empty.
+        </span>
+      </div>
+      <div
+        style={{
+          height: 24,
+          display: "flex",
+          alignItems: "center",
+          padding: "0 12px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          flexShrink: 0,
+        }}
+      >
+        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+          0 items
+        </span>
+      </div>
+    </div>
+  );
+}
 
 interface OpenFile {
   name: string;
   text: string;
 }
 
-// Menus for the notepad-style file viewer
 function FileMenuBar({ title, onBack }: { title: string; onBack: () => void }) {
   return (
     <div
@@ -131,17 +209,16 @@ export default function ExplorerShell({ appId }: { appId: AppId }) {
   const [activeId, setActiveId] = useState<AppId>(appId);
   const [openFile, setOpenFile] = useState<OpenFile | null>(null);
 
-  const isNotepad = NOTEPAD_APPS.has(activeId);
-  // Full notepad mode = dedicated notepad app OR a file is open
-  const isFullNotepad = isNotepad || openFile !== null;
+  const isBare = BARE_APPS.has(activeId);
+  const isFullscreen = isBare || openFile !== null;
 
-  // When navigating sidebar, close any open file
   const handleNavigate = (id: AppId) => {
     setOpenFile(null);
     setActiveId(id);
   };
 
   const renderContent = () => {
+    // File open in notepad viewer
     if (openFile) {
       return (
         <div
@@ -182,17 +259,16 @@ export default function ExplorerShell({ appId }: { appId: AppId }) {
         </div>
       );
     }
-    if (isNotepad) {
-      return activeId === "about" ? (
-        <NotepadShell text={ABOUT_TEXT} />
-      ) : (
-        <NotepadShell text={RESUME_TEXT} />
-      );
-    }
-    // Explorer content — inject onOpenFile for projects/blog
+
+    // Bare apps — full custom shell, no Explorer chrome
+    if (activeId === "about") return <DocumentViewerShell />;
+    if (activeId === "resume") return <NotepadShell text={RESUME_TEXT} />;
+
+    // Explorer apps
     if (activeId === "projects")
       return <ProjectsContent onOpenFile={setOpenFile} />;
     if (activeId === "blog") return <BlogContent onOpenFile={setOpenFile} />;
+    if (activeId === "recycle") return <RecycleBinContent />;
     return <ContactContent />;
   };
 
@@ -205,7 +281,7 @@ export default function ExplorerShell({ appId }: { appId: AppId }) {
         overflow: "hidden",
       }}
     >
-      {!isFullNotepad && (
+      {!isFullscreen && (
         <ExplorerSidebar activeAppId={activeId} onNavigate={handleNavigate} />
       )}
       <div
@@ -218,7 +294,7 @@ export default function ExplorerShell({ appId }: { appId: AppId }) {
           minWidth: 0,
         }}
       >
-        {isFullNotepad ? (
+        {isFullscreen ? (
           renderContent()
         ) : (
           <div style={{ flex: 1, overflowY: "auto" }}>{renderContent()}</div>

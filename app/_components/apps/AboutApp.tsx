@@ -1,4 +1,4 @@
-import NotepadShell, { ABOUT_TEXT } from "../NotepadShell";
+import DocumentViewerShell from "../DocumentViewerShell";
 export default function AboutApp() {
-  return <NotepadShell text={ABOUT_TEXT} />;
+  return <DocumentViewerShell />;
 }
