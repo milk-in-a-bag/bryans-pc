@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { AppId, WindowState } from "./types";
-import { APPS } from "./types";
 import StartMenu from "./taskbar/StartMenu";
-import TaskbarClock from "./taskbar/TaskbarClock";
+import WeatherWidget from "./taskbar/WeatherWidget";
+import TaskbarSystemTray from "./taskbar/TaskbarSystemTray";
+import TaskbarPinnedApps from "./taskbar/TaskbarPinnedApps";
 
 interface TaskbarProps {
   windows: WindowState[];
@@ -13,7 +14,6 @@ interface TaskbarProps {
   onOpenApp: (appId: AppId) => void;
 }
 
-// ── Win11-style colored Windows logo ─────────────────────────────────────────
 function WindowsLogo({ active }: { active: boolean }) {
   const o = active ? 1 : 0.9;
   return (
@@ -26,250 +26,6 @@ function WindowsLogo({ active }: { active: boolean }) {
   );
 }
 
-// ── Weather widget ────────────────────────────────────────────────────────────
-function WeatherWidget() {
-  const [weather, setWeather] = useState<{
-    temp: number | null;
-    condition: string;
-  } | null>(null);
-
-  useEffect(() => {
-    fetch("/api/weather")
-      .then((r) => r.json())
-      .then((d) => setWeather({ temp: d.temp, condition: d.condition }))
-      .catch(() => setWeather({ temp: null, condition: "Unavailable" }));
-  }, []);
-
-  const condition = weather?.condition ?? "...";
-  const temp = weather?.temp != null ? `${weather.temp}°F` : "—";
-
-  // Pick icon based on condition
-  const isRainy =
-    condition.includes("Rain") ||
-    condition.includes("Shower") ||
-    condition.includes("Drizzle");
-  const isCloudy = condition.includes("Cloud") || condition.includes("Fog");
-  const isStormy = condition.includes("Thunder");
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "0 12px",
-        height: 40,
-        borderRadius: 6,
-        cursor: "default",
-        flexShrink: 0,
-      }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-      }
-      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-    >
-      {/* Weather icon */}
-      {isStormy ? (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#a78bfa"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          style={{ flexShrink: 0 }}
-        >
-          <path d="M19 16.9A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
-          <polyline points="13 11 9 17 15 17 11 23" stroke="#fbbf24" />
-        </svg>
-      ) : isRainy ? (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#60a5fa"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          style={{ flexShrink: 0 }}
-        >
-          <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" />
-          <line x1="8" y1="19" x2="8" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-          <line x1="16" y1="19" x2="16" y2="21" />
-        </svg>
-      ) : isCloudy ? (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#94a3b8"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          style={{ flexShrink: 0 }}
-        >
-          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-        </svg>
-      ) : (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          style={{ flexShrink: 0 }}
-        >
-          <circle cx="12" cy="12" r="4" fill="#fbbf24" />
-          <path
-            d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-            stroke="#fbbf24"
-          />
-        </svg>
-      )}
-
-      <div
-        style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}
-      >
-        <span
-          style={{
-            fontSize: 12,
-            fontWeight: 600,
-            color: "rgba(255,255,255,0.9)",
-          }}
-        >
-          {temp}
-        </span>
-        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>
-          {condition}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-// ── System tray ───────────────────────────────────────────────────────────────
-function SystemTray() {
-  return (
-    <div
-      style={{ display: "flex", alignItems: "center", gap: 0, flexShrink: 0 }}
-    >
-      <TaskbarClock />
-      <button
-        style={{
-          width: 32,
-          height: 36,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          color: "rgba(255,255,255,0.6)",
-          borderRadius: 4,
-        }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
-        aria-label="Notifications"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        >
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-        </svg>
-      </button>
-    </div>
-  );
-}
-
-// ── Pinned app icons ──────────────────────────────────────────────────────────
-// Clicking an open app focuses/toggles it; clicking a closed one opens it.
-// ── Pinned taskbar icon — File Explorer only ──────────────────────────────────
-function PinnedApps({
-  windows,
-  activeWindowId,
-  onOpen,
-  onTaskbarClick,
-}: {
-  openAppIds: Set<AppId>;
-  windows: WindowState[];
-  activeWindowId: string | null;
-  onOpen: (id: AppId) => void;
-  onTaskbarClick: (id: string) => void;
-}) {
-  // File Explorer icon opens the Projects folder (most explorer-like app)
-  const explorerAppId: AppId = "projects";
-  const win = windows.find((w) => w.appId === explorerAppId);
-  const isActive = !!win && win.id === activeWindowId && !win.isMinimized;
-
-  const handleClick = () => {
-    if (win) onTaskbarClick(win.id);
-    else onOpen(explorerAppId);
-  };
-
-  return (
-    <button
-      onClick={handleClick}
-      title="File Explorer"
-      style={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 40,
-        height: 40,
-        borderRadius: 6,
-        flexShrink: 0,
-        background: isActive ? "rgba(255,255,255,0.12)" : "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-      onMouseEnter={(e) => {
-        if (!isActive)
-          (e.currentTarget as HTMLButtonElement).style.background =
-            "rgba(255,255,255,0.1)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = isActive
-          ? "rgba(255,255,255,0.12)"
-          : "none";
-      }}
-    >
-      {/* Fluent folder icon */}
-      <svg viewBox="0 0 48 48" width="24" height="24" fill="#e8a838">
-        <path d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z" />
-      </svg>
-      {win && (
-        <span
-          style={{
-            position: "absolute",
-            bottom: 2,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: isActive ? 16 : 4,
-            height: 3,
-            borderRadius: 2,
-            background: isActive ? "#60cdff" : "rgba(255,255,255,0.5)",
-            transition: "width 0.15s",
-          }}
-        />
-      )}
-    </button>
-  );
-}
-
-// ── Taskbar ───────────────────────────────────────────────────────────────────
 export default function Taskbar({
   windows,
   activeWindowId,
@@ -299,10 +55,8 @@ export default function Taskbar({
         <StartMenu onOpen={onOpenApp} onClose={() => setStartOpen(false)} />
       )}
 
-      {/* Far left — weather */}
       <WeatherWidget />
 
-      {/* Center group — start + search + pinned + open windows */}
       <div
         style={{
           flex: 1,
@@ -384,7 +138,6 @@ export default function Taskbar({
           </span>
         </button>
 
-        {/* Separator */}
         <div
           style={{
             width: 1,
@@ -395,8 +148,7 @@ export default function Taskbar({
           }}
         />
 
-        {/* Pinned app icons */}
-        <PinnedApps
+        <TaskbarPinnedApps
           openAppIds={new Set(windows.map((w) => w.appId))}
           windows={windows}
           activeWindowId={activeWindowId}
@@ -405,8 +157,7 @@ export default function Taskbar({
         />
       </div>
 
-      {/* Far right — system tray */}
-      <SystemTray />
+      <TaskbarSystemTray />
     </div>
   );
 }

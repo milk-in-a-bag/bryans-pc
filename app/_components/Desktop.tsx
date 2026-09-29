@@ -28,16 +28,24 @@ function StaticDesktopIcon({
   id,
   label,
   icon,
+  onDoubleClick,
 }: {
   id: string;
   label: string;
   icon: React.ReactNode;
+  onDoubleClick?: () => void;
 }) {
   const lastClick = useRef(0);
   return (
     <button
       onClick={() => {
-        lastClick.current = Date.now();
+        const now = Date.now();
+        if (now - lastClick.current < 400 && onDoubleClick) {
+          onDoubleClick();
+          lastClick.current = 0;
+        } else {
+          lastClick.current = now;
+        }
       }}
       className="group flex flex-col items-center gap-1.5 p-2 rounded-lg w-20 transition-colors duration-100 cursor-default select-none hover:bg-white/10 active:bg-white/20 focus:outline-none"
       aria-label={id}
@@ -99,7 +107,12 @@ export default function Desktop() {
             onOpen={openApp}
           />
         ))}
-        <StaticDesktopIcon id="thispc" label="This PC" icon={<ThisPCIcon />} />
+        <StaticDesktopIcon
+          id="thispc"
+          label="This PC"
+          icon={<ThisPCIcon />}
+          onDoubleClick={() => openApp("projects")}
+        />
       </div>
 
       {/* Windows */}

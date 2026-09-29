@@ -116,6 +116,7 @@ export default function Window({
       <WindowTitleBar
         icon={win.icon}
         title={win.title}
+        appId={win.appId}
         isActive={isActive}
         isMaximized={isMax}
         onMouseDown={onTitleMouseDown}
@@ -125,7 +126,7 @@ export default function Window({
         onMaximize={() => onMaximize(win.id)}
       />
       {win.appId !== "resume" && win.appId !== "about" && (
-        <WindowNavBar icon={win.icon} title={win.title} />
+        <WindowNavBar icon={win.icon} title={win.title} appId={win.appId} />
       )}
       {win.appId !== "resume" && win.appId !== "about" && <WindowToolbar />}
 

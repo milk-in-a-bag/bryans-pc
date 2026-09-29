@@ -1,8 +1,11 @@
 "use client";
 
+import { AppIcon } from "../DesktopIcon";
+
 interface WindowTitleBarProps {
   icon: string;
   title: string;
+  appId: string;
   isActive: boolean;
   isMaximized: boolean;
   onMouseDown: (e: React.MouseEvent) => void;
@@ -16,8 +19,9 @@ const captionIconColor = (active: boolean) =>
   active ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.35)";
 
 export default function WindowTitleBar({
-  icon,
+  icon: _icon,
   title,
+  appId,
   isActive,
   isMaximized,
   onMouseDown,
@@ -62,9 +66,10 @@ export default function WindowTitleBar({
             lineHeight: 1,
             flexShrink: 0,
             opacity: isActive ? 1 : 0.5,
+            display: "flex",
           }}
         >
-          {icon}
+          <AppIcon appId={appId} size={16} />
         </span>
         <span
           style={{

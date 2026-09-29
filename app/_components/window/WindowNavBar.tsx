@@ -1,8 +1,11 @@
 "use client";
 
+import { AppIcon } from "../DesktopIcon";
+
 interface WindowNavBarProps {
   icon: string;
   title: string;
+  appId: string;
 }
 
 const Chevron = () => (
@@ -37,7 +40,11 @@ const ThisPCIcon = () => (
   </svg>
 );
 
-export default function WindowNavBar({ icon, title }: WindowNavBarProps) {
+export default function WindowNavBar({
+  icon: _icon,
+  title,
+  appId,
+}: WindowNavBarProps) {
   return (
     <div
       className="flex items-center shrink-0"
@@ -176,7 +183,9 @@ export default function WindowNavBar({ icon, title }: WindowNavBarProps) {
       >
         <ThisPCIcon />
         <Chevron />
-        <span style={{ fontSize: 14, lineHeight: 1 }}>{icon}</span>
+        <span style={{ display: "flex", lineHeight: 1 }}>
+          <AppIcon appId={appId} size={15} />
+        </span>
         <Chevron />
         <span
           style={{
