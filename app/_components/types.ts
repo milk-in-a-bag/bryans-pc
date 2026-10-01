@@ -4,7 +4,10 @@ export type AppId =
   | "blog"
   | "contact"
   | "resume"
-  | "recycle";
+  | "recycle"
+  | "pictures"
+  | "music"
+  | "documents";
 
 export interface AppConfig {
   id: AppId;
@@ -68,5 +71,26 @@ export const APPS: AppConfig[] = [
     icon: "🗑️",
     defaultSize: { width: 860, height: 560 },
     defaultPosition: { x: 140, y: 80 },
+  },
+  {
+    id: "pictures",
+    title: "Pictures",
+    icon: "📁",
+    defaultSize: { width: 860, height: 560 },
+    defaultPosition: { x: 150, y: 80 },
+  },
+  {
+    id: "music",
+    title: "Music",
+    icon: "📁",
+    defaultSize: { width: 860, height: 560 },
+    defaultPosition: { x: 160, y: 85 },
+  },
+  {
+    id: "documents",
+    title: "Documents",
+    icon: "📁",
+    defaultSize: { width: 860, height: 560 },
+    defaultPosition: { x: 170, y: 90 },
   },
 ];

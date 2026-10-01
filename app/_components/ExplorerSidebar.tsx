@@ -61,6 +61,26 @@ export default function ExplorerSidebar({
         />
       ))}
 
+      <SectionLabel>Public</SectionLabel>
+      <SidebarRow
+        icon={<FolderIcon color="#e8a838" />}
+        label="Pictures"
+        active={activeAppId === "pictures"}
+        onClick={() => onNavigate("pictures")}
+      />
+      <SidebarRow
+        icon={<FolderIcon color="#e8a838" />}
+        label="Music"
+        active={activeAppId === "music"}
+        onClick={() => onNavigate("music")}
+      />
+      <SidebarRow
+        icon={<FolderIcon color="#e8a838" />}
+        label="Documents"
+        active={activeAppId === "documents"}
+        onClick={() => onNavigate("documents")}
+      />
+
       <SectionLabel>This PC</SectionLabel>
       <TreeSection label="This PC" icon={<ThisPCIcon />}>
         <SidebarRow icon={<DriveIcon />} label="Local Disk (C:)" indent />

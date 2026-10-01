@@ -6,6 +6,9 @@ import ExplorerSidebar from "./ExplorerSidebar";
 import ProjectsContent from "./apps/content/ProjectsContent";
 import BlogContent from "./apps/content/BlogContent";
 import ContactContent from "./apps/content/ContactContent";
+import DocumentsContent from "./apps/content/DocumentsContent";
+import MusicContent from "./apps/content/MusicContent";
+import PicturesContent from "./apps/content/PicturesContent";
 import NotepadShell, { RESUME_TEXT } from "./NotepadShell";
 import DocumentViewerShell from "./DocumentViewerShell";
 
@@ -268,6 +271,10 @@ export default function ExplorerShell({ appId }: { appId: AppId }) {
     if (activeId === "projects")
       return <ProjectsContent onOpenFile={setOpenFile} />;
     if (activeId === "blog") return <BlogContent onOpenFile={setOpenFile} />;
+    if (activeId === "documents")
+      return <DocumentsContent onOpenFile={setOpenFile} />;
+    if (activeId === "pictures") return <PicturesContent />;
+    if (activeId === "music") return <MusicContent />;
     if (activeId === "recycle") return <RecycleBinContent />;
     return <ContactContent />;
   };

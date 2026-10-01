@@ -2,19 +2,19 @@
 
 function Photo({
   side,
-  color,
-  caption,
+  src,
   width = 220,
   height = 165,
 }: {
   side: "left" | "right";
-  color: string;
-  caption: string;
+  src: string;
   width?: number;
   height?: number;
 }) {
   return (
-    <div
+    <img
+      src={src}
+      alt="Bryan Mayodi"
       style={{
         float: side,
         marginRight: side === "left" ? 18 : 0,
@@ -22,27 +22,11 @@ function Photo({
         marginBottom: 12,
         width,
         height,
-        background: color,
+        objectFit: "cover",
         borderRadius: 4,
         flexShrink: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
       }}
-    >
-      {/* Replace with: <img src="..." style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:4}} /> */}
-      <span
-        style={{
-          fontSize: 11,
-          color: "rgba(255,255,255,0.55)",
-          textAlign: "center",
-          padding: "0 12px",
-          lineHeight: 1.4,
-        }}
-      >
-        {caption}
-      </span>
-    </div>
+    />
   );
 }
 
@@ -66,20 +50,14 @@ function Page() {
 
   return (
     <div style={{ padding: "28px 32px" }}>
-      <Photo
-        side="right"
-        color="#1a3a5c"
-        caption="📸 Me, looking like I know what I'm doing"
-        width={230}
-        height={170}
-      />
+      {/* Block 1 — professional headshot floated right */}
+      <Photo side="right" src="/bryan-3.png" width={200} height={240} />
       <p style={p}>
         I&apos;m back at it — another update for anyone who somehow ended up on
         this page. I&apos;m Bryan Kerry Mayodi, a fullstack developer based in
-        Nairobi, Kenya, and this is my little corner of the internet where I
-        pretend to be organised. I&apos;ve been writing code professionally
-        since 2024, which sounds recent but feels like a decade because of how
-        much has happened.
+        Nairobi, Kenya. I&apos;ve been writing code professionally since 2024,
+        which sounds recent but feels like a decade because of how much has
+        happened.
       </p>
       <p style={p}>
         Right now I&apos;m a{" "}
@@ -91,21 +69,17 @@ function Page() {
       </p>
       <Clearfix />
 
-      <Photo
-        side="left"
-        color="#1a4a2e"
-        caption="🏛️ Senate of Kenya internship. Yes, that Senate."
-        width={220}
-        height={160}
-      />
+      {/* Block 2 — formal mirror selfie floated left */}
+      <Photo side="left" src="/bryan-1.jpg" width={160} height={210} />
       <p style={p}>
         Before DigitalQatalyst, I interned at the{" "}
         <strong style={strong}>Senate of Kenya</strong> where I built an
-        internal document portal for the Journals Office. I also interned at{" "}
-        <strong style={strong}>Qalibrated Systems</strong> where I maintained
-        calibration management software — a sentence that sounds made up but is
-        very real and very niche. Both experiences taught me that good software
-        is invisible and bad software is everyone&apos;s problem.
+        internal document portal for the Journals Office — yes, I have an ID
+        badge and everything. I also interned at{" "}
+        <strong style={strong}>Qalibrated Systems</strong> maintaining
+        calibration management software, which is exactly as niche as it sounds.
+        Both taught me that good software is invisible and bad software is
+        everyone&apos;s problem.
       </p>
       <p style={p}>
         I graduated from{" "}
@@ -116,13 +90,8 @@ function Page() {
       </p>
       <Clearfix />
 
-      <Photo
-        side="right"
-        color="#4a2d6b"
-        caption="📱 M-Pesa Finance Tracker — it reads your SMS. On purpose."
-        width={230}
-        height={160}
-      />
+      {/* Block 3 — cap selfie floated right */}
+      <Photo side="right" src="/bryan-2.jpg" width={185} height={195} />
       <p style={p}>
         On the side, I&apos;ve been building things. My proudest project is the{" "}
         <strong style={strong}>M-Pesa Finance Tracker</strong> — a PWA that
@@ -133,39 +102,25 @@ function Page() {
       </p>
       <p style={p}>
         I&apos;m also building <strong style={strong}>Restaurant Engine</strong>{" "}
-        — a WhatsApp-integrated digital menu platform for Nairobi restaurants.
-        You order via wa.me, earn loyalty stamps, and get a nice experience. I
-        am very proud of the multi-tenant schema. I have described this schema
-        to people at social events. I cannot tell if they were interested or
-        just polite.
+        — a WhatsApp-integrated digital menu platform for Nairobi restaurants. I
+        am very proud of the multi-tenant database schema. I have described this
+        schema to people at social events. The jury is still out on whether they
+        were interested or just polite.
       </p>
       <Clearfix />
 
-      <Photo
-        side="left"
-        color="#5a3a1a"
-        caption="☕ My actual work setup. There are more tabs than this."
-        width={210}
-        height={150}
-      />
       <p style={p}>
         My stack of choice is{" "}
         <strong style={strong}>Next.js + TypeScript + PostgreSQL</strong> for
         most things, with Django or Express on the backend depending on the
-        project. I use Tailwind CSS because life is short and I would rather
-        argue about component architecture than class name conflicts. I also use
-        Figma, which means I have opinions about spacing that nobody asked for.
-      </p>
-      <p style={p}>
-        I&apos;m looking for a role where I can{" "}
+        project. I&apos;m looking for a role where I can{" "}
         <strong style={strong}>
           ship meaningful products and keep growing fast
         </strong>
         . If that sounds like somewhere you work, my email is{" "}
         <span style={link}>bryanmayodi@gmail.com</span>. I respond quickly. I
-        have been told this is unusual. I consider it a competitive advantage.
+        consider this a competitive advantage.
       </p>
-      <Clearfix />
 
       <div
         style={{

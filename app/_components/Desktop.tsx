@@ -12,8 +12,10 @@ import ProjectsApp from "./apps/ProjectsApp";
 import BlogApp from "./apps/BlogApp";
 import ContactApp from "./apps/ContactApp";
 import ResumeApp from "./apps/ResumeApp";
-
 import RecycleBinApp from "./apps/RecycleBinApp";
+import PicturesApp from "./apps/PicturesApp";
+import MusicApp from "./apps/MusicApp";
+import DocumentsApp from "./apps/DocumentsApp";
 
 const APP_CONTENT: Record<AppId, React.ReactNode> = {
   about: <AboutApp />,
@@ -22,7 +24,20 @@ const APP_CONTENT: Record<AppId, React.ReactNode> = {
   contact: <ContactApp />,
   resume: <ResumeApp />,
   recycle: <RecycleBinApp />,
+  pictures: <PicturesApp />,
+  music: <MusicApp />,
+  documents: <DocumentsApp />,
 };
+
+// Apps shown as desktop icons (public folder subfolders are accessed via Public icon)
+const DESKTOP_APP_IDS: AppId[] = [
+  "about",
+  "projects",
+  "blog",
+  "contact",
+  "resume",
+  "recycle",
+];
 
 function StaticDesktopIcon({
   id,
@@ -57,6 +72,21 @@ function StaticDesktopIcon({
         {label}
       </span>
     </button>
+  );
+}
+
+function PublicFolderIcon() {
+  return (
+    <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+      {/* Folder shape */}
+      <path
+        d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+        fill="#e8a838"
+      />
+      {/* Person icon overlay */}
+      <circle cx="30" cy="23" r="4" fill="white" opacity="0.9" />
+      <path d="M22 35c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="white" opacity="0.9" />
+    </svg>
   );
 }
 
@@ -99,7 +129,7 @@ export default function Desktop() {
         className="absolute top-6 left-6 flex flex-col flex-wrap gap-1"
         style={{ maxHeight: "calc(100vh - 80px)" }}
       >
-        {APPS.map((app) => (
+        {APPS.filter((app) => DESKTOP_APP_IDS.includes(app.id)).map((app) => (
           <DesktopIcon
             key={app.id}
             app={app}
@@ -112,6 +142,12 @@ export default function Desktop() {
           label="This PC"
           icon={<ThisPCIcon />}
           onDoubleClick={() => openApp("projects")}
+        />
+        <StaticDesktopIcon
+          id="public"
+          label="Public"
+          icon={<PublicFolderIcon />}
+          onDoubleClick={() => openApp("pictures")}
         />
       </div>
 

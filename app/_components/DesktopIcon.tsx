@@ -17,6 +17,76 @@ function FolderIcon() {
     </svg>
   );
 }
+
+function PicturesIcon() {
+  return (
+    <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+      <path
+        d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+        fill="#e8a838"
+      />
+      {/* Photo icon overlay */}
+      <circle cx="32" cy="22" r="3.5" fill="white" opacity="0.9" />
+      <path d="M14 36l7-8 5 6 4-4 6 6H14z" fill="white" opacity="0.9" />
+    </svg>
+  );
+}
+
+function MusicIcon() {
+  return (
+    <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+      <path
+        d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+        fill="#e8a838"
+      />
+      {/* Music note overlay */}
+      <path
+        d="M28 18v10.6a3.5 3.5 0 1 1-2-3.2V20l6-2v-3l-4 1z"
+        fill="white"
+        opacity="0.9"
+      />
+    </svg>
+  );
+}
+
+function DocumentsFolderIcon() {
+  return (
+    <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
+      <path
+        d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+        fill="#e8a838"
+      />
+      {/* Lines overlay */}
+      <rect
+        x="16"
+        y="23"
+        width="16"
+        height="2"
+        rx="1"
+        fill="white"
+        opacity="0.9"
+      />
+      <rect
+        x="16"
+        y="28"
+        width="12"
+        height="2"
+        rx="1"
+        fill="white"
+        opacity="0.75"
+      />
+      <rect
+        x="16"
+        y="33"
+        width="14"
+        height="2"
+        rx="1"
+        fill="white"
+        opacity="0.75"
+      />
+    </svg>
+  );
+}
 function ContactIcon() {
   return (
     <svg viewBox="0 0 48 48" width="44" height="44" fill="#0078d4">
@@ -69,6 +139,9 @@ const ICONS: Record<string, React.ReactNode> = {
   contact: <ContactIcon />,
   resume: <ResumeIcon />,
   recycle: <RecycleBinIcon />,
+  pictures: <PicturesIcon />,
+  music: <MusicIcon />,
+  documents: <DocumentsFolderIcon />,
 };
 
 // ── Inline icon for window chrome (tab + breadcrumb) ─────────────────────────
@@ -111,6 +184,30 @@ export function AppIcon({
     recycle: (
       <svg viewBox="0 0 48 48" width={size} height={size} fill="#0078d4">
         <path d="M20 10.5v.5h8v-.5a4 4 0 0 0-8 0m-2.5.5v-.5a6.5 6.5 0 1 1 13 0v.5h11.25a1.25 1.25 0 1 1 0 2.5h-2.92l-2 23.86A7.25 7.25 0 0 1 29.61 44H18.39a7.25 7.25 0 0 1-7.22-6.64l-2-23.86H6.25a1.25 1.25 0 1 1 0-2.5zm4 9.25a1.25 1.25 0 1 0-2.5 0v14.5a1.25 1.25 0 1 0 2.5 0zM27.75 19c-.69 0-1.25.56-1.25 1.25v14.5a1.25 1.25 0 1 0 2.5 0v-14.5c0-.69-.56-1.25-1.25-1.25" />
+      </svg>
+    ),
+    pictures: (
+      <svg viewBox="0 0 48 48" width={size} height={size} fill="none">
+        <path
+          d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+          fill="#e8a838"
+        />
+      </svg>
+    ),
+    music: (
+      <svg viewBox="0 0 48 48" width={size} height={size} fill="none">
+        <path
+          d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+          fill="#e8a838"
+        />
+      </svg>
+    ),
+    documents: (
+      <svg viewBox="0 0 48 48" width={size} height={size} fill="none">
+        <path
+          d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
+          fill="#e8a838"
+        />
       </svg>
     ),
   };
