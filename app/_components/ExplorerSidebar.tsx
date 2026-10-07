@@ -9,6 +9,7 @@ import {
   DocumentsIcon,
   FolderIcon,
   PdfIcon,
+  PicturesIcon,
   ThisPCIcon,
   DriveIcon,
   NetworkIcon,
@@ -48,6 +49,13 @@ export default function ExplorerSidebar({
       <SidebarRow icon={<DesktopIcon />} label="Desktop" pinned />
       <SidebarRow icon={<DownloadIcon />} label="Downloads" pinned />
       <SidebarRow icon={<DocumentsIcon />} label="Documents" pinned />
+      <SidebarRow
+        icon={<PicturesIcon />}
+        label="Pictures"
+        active={activeAppId === "pictures"}
+        pinned
+        onClick={() => onNavigate("pictures")}
+      />
 
       <SectionLabel>Portfolio</SectionLabel>
       {NAV_APPS.map(({ id, label, color }) => (
