@@ -75,21 +75,6 @@ function StaticDesktopIcon({
   );
 }
 
-function PublicFolderIcon() {
-  return (
-    <svg viewBox="0 0 48 48" width="44" height="44" fill="none">
-      {/* Folder shape */}
-      <path
-        d="M4 12.25C4 8.8 6.8 6 10.25 6h6.46c1 0 1.95.4 2.66 1.1l3.38 3.38-5.15 5.15q-.37.37-.89.37H4zm0 6.25v16.25C4 38.2 6.8 41 10.25 41h27.5C41.2 41 44 38.2 44 34.75v-17.5C44 13.8 41.2 11 37.75 11H25.77l-6.4 6.4c-.7.7-1.66 1.1-2.66 1.1z"
-        fill="#e8a838"
-      />
-      {/* Person icon overlay */}
-      <circle cx="30" cy="23" r="4" fill="white" opacity="0.9" />
-      <path d="M22 35c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="white" opacity="0.9" />
-    </svg>
-  );
-}
-
 export default function Desktop() {
   const {
     windows,
@@ -142,12 +127,6 @@ export default function Desktop() {
           label="This PC"
           icon={<ThisPCIcon />}
           onDoubleClick={() => openApp("projects")}
-        />
-        <StaticDesktopIcon
-          id="public"
-          label="Public"
-          icon={<PublicFolderIcon />}
-          onDoubleClick={() => openApp("pictures")}
         />
       </div>
 
