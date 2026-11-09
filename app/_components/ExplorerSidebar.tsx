@@ -38,7 +38,7 @@ export default function ExplorerSidebar({
       className="flex flex-col overflow-y-auto shrink-0 py-1"
       style={{
         width: 200,
-        background: "#272727",
+        background: "#1e1e1e",
         borderRight: "1px solid rgba(255,255,255,0.06)",
       }}
     >

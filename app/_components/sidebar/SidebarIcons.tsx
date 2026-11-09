@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function HomeIcon() {
   return (
     <svg
@@ -36,10 +38,10 @@ export function GalleryIcon() {
 
 export function DesktopIcon() {
   return (
-    <img
+    <Image
       src="/icons/desktop.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="Desktop"
       style={{ imageRendering: "auto" }}
     />
@@ -48,10 +50,10 @@ export function DesktopIcon() {
 
 export function DownloadIcon() {
   return (
-    <img
+    <Image
       src="/icons/downloads.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="Downloads"
       style={{ objectFit: "contain" }}
     />
@@ -60,10 +62,10 @@ export function DownloadIcon() {
 
 export function DocumentsIcon() {
   return (
-    <img
+    <Image
       src="/icons/documents.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="Documents"
       style={{ objectFit: "contain" }}
     />
@@ -71,15 +73,15 @@ export function DocumentsIcon() {
 }
 
 export function FolderIcon({ color: _color }: { color?: string }) {
-  return <img src="/icons/folder.png" width="15" height="13" alt="Folder" />;
+  return <Image src="/icons/folder.png" width={15} height={13} alt="Folder" />;
 }
 
 export function PinIcon() {
   return (
-    <img
+    <Image
       src="/icons/pin.png"
-      width="10"
-      height="10"
+      width={10}
+      height={10}
       alt="Pinned"
       style={{ objectFit: "contain", opacity: 0.6 }}
     />
@@ -88,10 +90,10 @@ export function PinIcon() {
 
 export function ThisPCIcon() {
   return (
-    <img
+    <Image
       src="/icons/pc.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="This PC"
       style={{ objectFit: "contain" }}
     />
@@ -100,10 +102,10 @@ export function ThisPCIcon() {
 
 export function DriveIcon() {
   return (
-    <img
+    <Image
       src="/icons/drive.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="Local Disk"
       style={{ objectFit: "contain" }}
     />
@@ -131,10 +133,10 @@ export function NetworkIcon() {
 
 export function PicturesIcon() {
   return (
-    <img
+    <Image
       src="/icons/pictures.png"
-      width="15"
-      height="15"
+      width={15}
+      height={15}
       alt="Pictures"
       style={{ objectFit: "contain" }}
     />

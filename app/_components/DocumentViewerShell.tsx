@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 function Photo({
   side,
   src,
@@ -12,16 +14,16 @@ function Photo({
   height?: number;
 }) {
   return (
-    <img
+    <Image
       src={src}
       alt="Bryan Mayodi"
+      width={width}
+      height={height}
       style={{
         float: side,
         marginRight: side === "left" ? 18 : 0,
         marginLeft: side === "right" ? 18 : 0,
         marginBottom: 12,
-        width,
-        height,
         objectFit: "cover",
         borderRadius: 4,
         flexShrink: 0,

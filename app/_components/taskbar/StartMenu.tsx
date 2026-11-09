@@ -1,37 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { AppId } from "../types";
 import { APPS } from "../types";
 
-const TILE_COLORS: Record<string, string> = {
-  about: "rgba(0,120,212,0.9)",
-  projects: "rgba(16,124,16,0.9)",
-  blog: "rgba(136,0,37,0.9)",
-  contact: "rgba(0,99,177,0.9)",
-  resume: "rgba(93,47,151,0.9)",
+const APP_ICONS: Record<string, string> = {
+  about: "/icons/folder.png",
+  projects: "/icons/folder.png",
+  blog: "/icons/folder.png",
+  contact: "/icons/mail.png",
+  resume: "/icons/notepad.png",
+  recycle: "/icons/recycle-bin-empty.png",
+  pictures: "/icons/pictures.png",
+  music: "/icons/folder.png",
+  documents: "/icons/documents.png",
 };
 
 const RECOMMENDED = [
-  {
-    name: "About Me",
-    subtitle: "Recently opened",
-    appId: "about" as AppId,
-    icon: "👤",
-  },
-  {
-    name: "Resume",
-    subtitle: "Recently opened",
-    appId: "resume" as AppId,
-    icon: "📄",
-  },
-  {
-    name: "Projects",
-    subtitle: "2h ago",
-    appId: "projects" as AppId,
-    icon: "💼",
-  },
-  { name: "Blog", subtitle: "5h ago", appId: "blog" as AppId, icon: "📝" },
+  { name: "About Me", subtitle: "Recently opened", appId: "about" as AppId },
+  { name: "Resume", subtitle: "Recently opened", appId: "resume" as AppId },
+  { name: "Projects", subtitle: "2h ago", appId: "projects" as AppId },
+  { name: "Blog", subtitle: "5h ago", appId: "blog" as AppId },
 ];
 
 const ChevronRight = () => (
@@ -48,6 +38,43 @@ const ChevronRight = () => (
   </svg>
 );
 
+function PowerButton() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <button
+      aria-label="Power"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        width: 36,
+        height: 36,
+        borderRadius: 8,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: hovered ? "rgba(255,255,255,0.1)" : "transparent",
+        color: hovered ? "white" : "rgba(255,255,255,0.55)",
+        transition: "background 0.15s, color 0.15s",
+        border: "none",
+        cursor: "pointer",
+      }}
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      >
+        <path d="M8 1.5v5" />
+        <path d="M5 3.2A6 6 0 1 0 11 3.2" />
+      </svg>
+    </button>
+  );
+}
+
 interface Props {
   onOpen: (appId: AppId) => void;
   onClose: () => void;
@@ -56,7 +83,6 @@ interface Props {
 export default function StartMenu({ onOpen, onClose }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState("");
-
   const filteredApps = search.trim()
     ? APPS.filter((a) => a.title.toLowerCase().includes(search.toLowerCase()))
     : APPS;
@@ -150,15 +176,23 @@ export default function StartMenu({ onOpen, onClose }: Props) {
                 className="flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-white/10 active:bg-white/15 transition-colors group"
               >
                 <div
-                  className="flex items-center justify-center text-2xl leading-none shadow-md"
                   style={{
                     width: 48,
                     height: 48,
                     borderRadius: 12,
-                    background: TILE_COLORS[app.id] ?? "rgba(60,60,60,0.9)",
+                    background: "rgba(255,255,255,0.07)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {app.icon}
+                  <Image
+                    src={APP_ICONS[app.id] ?? "/icons/folder.png"}
+                    width={32}
+                    height={32}
+                    alt={app.title}
+                    style={{ objectFit: "contain" }}
+                  />
                 </div>
                 <span className="text-[11px] text-white/65 group-hover:text-white transition-colors text-center leading-tight w-full truncate px-0.5">
                   {app.title}
@@ -191,7 +225,7 @@ export default function StartMenu({ onOpen, onClose }: Props) {
                 gap: "2px",
               }}
             >
-              {RECOMMENDED.map(({ name, subtitle, appId, icon }) => (
+              {RECOMMENDED.map(({ name, subtitle, appId }) => (
                 <button
                   key={name}
                   onClick={() => {
@@ -201,16 +235,24 @@ export default function StartMenu({ onOpen, onClose }: Props) {
                   className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors text-left group"
                 >
                   <div
-                    className="shrink-0 flex items-center justify-center text-lg"
                     style={{
                       width: 36,
                       height: 36,
                       borderRadius: 8,
-                      background: "rgba(255,255,255,0.1)",
-                      overflow: "hidden",
+                      background: "rgba(255,255,255,0.07)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
                     }}
                   >
-                    {icon}
+                    <Image
+                      src={APP_ICONS[appId] ?? "/icons/folder.png"}
+                      width={22}
+                      height={22}
+                      alt={name}
+                      style={{ objectFit: "contain" }}
+                    />
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-[12px] text-white/85 group-hover:text-white truncate leading-tight">
@@ -233,12 +275,18 @@ export default function StartMenu({ onOpen, onClose }: Props) {
         >
           <button className="flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-white/10 transition-colors group">
             <div
-              className="shrink-0 flex items-center justify-center text-[13px] font-bold text-white"
               style={{
                 width: 32,
                 height: 32,
                 borderRadius: "50%",
                 background: "linear-gradient(135deg, #0078d4, #60cdff)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 13,
+                fontWeight: 700,
+                color: "white",
+                flexShrink: 0,
               }}
             >
               BM
@@ -247,23 +295,7 @@ export default function StartMenu({ onOpen, onClose }: Props) {
               Bryan Mayodi
             </span>
           </button>
-          <button
-            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors text-white/55 hover:text-white"
-            aria-label="Power"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            >
-              <path d="M8 1.5v5" />
-              <path d="M5 3.2A6 6 0 1 0 11 3.2" />
-            </svg>
-          </button>
+          <PowerButton />
         </div>
       </div>
     </div>

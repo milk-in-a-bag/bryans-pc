@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { AppId, WindowState } from "./types";
 import StartMenu from "./taskbar/StartMenu";
 import WeatherWidget from "./taskbar/WeatherWidget";
@@ -12,18 +13,6 @@ interface TaskbarProps {
   activeWindowId: string | null;
   onTaskbarClick: (id: string) => void;
   onOpenApp: (appId: AppId) => void;
-}
-
-function WindowsLogo({ active }: { active: boolean }) {
-  const o = active ? 1 : 0.9;
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M0 2.2L6.5 1.3V7.5H0V2.2Z" fill={`rgba(0,188,242,${o})`} />
-      <path d="M7.3 1.2L16 0V7.5H7.3V1.2Z" fill={`rgba(0,188,242,${o})`} />
-      <path d="M0 8.5H6.5V14.7L0 13.8V8.5Z" fill={`rgba(0,188,242,${o})`} />
-      <path d="M7.3 8.5H16V16L7.3 14.8V8.5Z" fill={`rgba(0,188,242,${o})`} />
-    </svg>
-  );
 }
 
 export default function Taskbar({
@@ -45,9 +34,10 @@ export default function Taskbar({
         zIndex: 9999,
         display: "flex",
         alignItems: "center",
-        background: "rgba(20,20,20,0.94)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
+        background: "rgba(15,15,15,0.55)",
+        backdropFilter: "blur(40px) saturate(200%) brightness(0.9)",
+        WebkitBackdropFilter: "blur(40px) saturate(200%) brightness(0.9)",
+        borderTop: "1px solid rgba(255,255,255,0.12)",
         padding: "0 4px",
       }}
     >
@@ -93,7 +83,13 @@ export default function Taskbar({
               (e.currentTarget as HTMLButtonElement).style.background = "none";
           }}
         >
-          <WindowsLogo active={startOpen} />
+          <Image
+            src="/icons/windows.png"
+            width={22}
+            height={22}
+            alt="Start"
+            draggable={false}
+          />
         </button>
 
         {/* Search pill */}
@@ -105,9 +101,9 @@ export default function Taskbar({
             alignItems: "center",
             gap: 8,
             height: 34,
-            width: 200,
-            padding: "0 12px",
-            borderRadius: 6,
+            width: 220,
+            padding: "0 14px",
+            borderRadius: 20,
             background: "rgba(255,255,255,0.08)",
             border: "none",
             cursor: "pointer",

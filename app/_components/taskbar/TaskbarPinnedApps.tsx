@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { AppId, WindowState } from "../types";
 
 interface Props {
@@ -53,10 +54,10 @@ export default function TaskbarPinnedApps({
           : "none";
       }}
     >
-      <img
+      <Image
         src="/icons/file-explorer.png"
-        width="24"
-        height="24"
+        width={24}
+        height={24}
         alt="File Explorer"
         style={{ objectFit: "contain" }}
       />

@@ -65,7 +65,7 @@ function FileIcon({
       <span
         style={{
           fontSize: 11,
-          color: "rgba(255,255,255,0.8)",
+          color: "white",
           textAlign: "center",
           lineHeight: 1.3,
           wordBreak: "break-word",

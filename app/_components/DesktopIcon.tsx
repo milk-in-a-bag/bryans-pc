@@ -1,12 +1,12 @@
 "use client";
-"use client";
 
 import { useRef, useCallback } from "react";
+import Image from "next/image";
 import type { AppConfig } from "./types";
 
 function FolderImg({ size }: { size: number }) {
   return (
-    <img
+    <Image
       src="/icons/folder.png"
       width={size}
       height={size}
@@ -25,10 +25,10 @@ function AboutIcon() {
 }
 function ContactIcon() {
   return (
-    <img
+    <Image
       src="/icons/mail.png"
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="Mail"
       style={{ objectFit: "contain" }}
     />
@@ -36,10 +36,10 @@ function ContactIcon() {
 }
 function ResumeIcon() {
   return (
-    <img
+    <Image
       src="/icons/notepad.png"
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="Notepad"
       style={{ objectFit: "contain" }}
     />
@@ -47,10 +47,10 @@ function ResumeIcon() {
 }
 export function ThisPCIcon() {
   return (
-    <img
+    <Image
       src="/icons/pc.png"
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="This PC"
       style={{ objectFit: "contain" }}
     />
@@ -60,12 +60,12 @@ export function ThisPCIcon() {
 // Uses real Win11 icons — empty by default since bin is always empty here
 export function RecycleBinIcon({ full = false }: { full?: boolean }) {
   return (
-    <img
+    <Image
       src={
         full ? "/icons/recycle-bin-full.png" : "/icons/recycle-bin-empty.png"
       }
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="Recycle Bin"
       style={{ objectFit: "contain" }}
     />
@@ -80,20 +80,20 @@ const ICONS: Record<string, React.ReactNode> = {
   resume: <ResumeIcon />,
   recycle: <RecycleBinIcon />,
   pictures: (
-    <img
+    <Image
       src="/icons/pictures.png"
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="Pictures"
       style={{ objectFit: "contain" }}
     />
   ),
   music: <FolderImg size={44} />,
   documents: (
-    <img
+    <Image
       src="/icons/documents.png"
-      width="44"
-      height="44"
+      width={44}
+      height={44}
       alt="Documents"
       style={{ objectFit: "contain" }}
     />
@@ -111,7 +111,7 @@ export function AppIcon({
   const folderApps = new Set(["projects", "blog", "music"]);
   if (appId === "pictures") {
     return (
-      <img
+      <Image
         src="/icons/pictures.png"
         width={size}
         height={size}
@@ -122,7 +122,7 @@ export function AppIcon({
   }
   if (appId === "documents") {
     return (
-      <img
+      <Image
         src="/icons/documents.png"
         width={size}
         height={size}
@@ -133,7 +133,7 @@ export function AppIcon({
   }
   if (folderApps.has(appId)) {
     return (
-      <img
+      <Image
         src="/icons/folder.png"
         width={size}
         height={size}
@@ -144,7 +144,7 @@ export function AppIcon({
   }
   if (appId === "recycle") {
     return (
-      <img
+      <Image
         src="/icons/recycle-bin-empty.png"
         width={size}
         height={size}
@@ -161,7 +161,7 @@ export function AppIcon({
       </svg>
     ),
     contact: (
-      <img
+      <Image
         src="/icons/mail.png"
         width={size}
         height={size}
@@ -170,7 +170,7 @@ export function AppIcon({
       />
     ),
     resume: (
-      <img
+      <Image
         src="/icons/notepad.png"
         width={size}
         height={size}
@@ -219,10 +219,10 @@ export default function DesktopIcon({
           <span className="text-4xl leading-none">{app.icon}</span>
         )}
         {!SYSTEM_ICONS.has(app.id) && (
-          <img
+          <Image
             src="/icons/shortcut.png"
-            width="16"
-            height="16"
+            width={16}
+            height={16}
             alt=""
             style={{ position: "absolute", bottom: 0, left: 0 }}
           />
