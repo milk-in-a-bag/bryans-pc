@@ -56,8 +56,8 @@ export default function TaskbarPinnedApps({
     >
       <Image
         src="/icons/file-explorer.png"
-        width={24}
-        height={24}
+        width={28}
+        height={28}
         alt="File Explorer"
         style={{ objectFit: "contain" }}
       />

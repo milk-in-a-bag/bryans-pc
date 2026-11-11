@@ -85,8 +85,8 @@ export default function Taskbar({
         >
           <Image
             src="/icons/windows.png"
-            width={22}
-            height={22}
+            width={28}
+            height={28}
             alt="Start"
             draggable={false}
           />
